@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
-import { FETCH_QUESTIONS, COUNTER, SELECT_ANSWER } from "../actions/types";
+import {
+    FETCH_QUESTIONS,
+    COUNTER,
+    SELECT_ANSWER,
+    TOGGLE_LOCK
+} from "../actions/types";
 
 const quizLength = () => {
-    return 5;
+    return 3;
 };
 
 const trivia = (state = [], action) => {
@@ -37,9 +42,19 @@ const selected = (state = initalSelect, action) => {
     }
 };
 
+const answersLocked = (state = false, action) => {
+    switch (action.type) {
+        case TOGGLE_LOCK:
+            return !state;
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
     trivia,
     counter,
     quizLength,
-    selected
+    selected,
+    answersLocked
 });

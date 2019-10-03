@@ -2,19 +2,32 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { nextQuestion, selectAnswer } from "../actions";
+import { nextQuestion, selectAnswer, toggleLock } from "../actions";
 import { decodeHtml } from "./helper";
 import Progress from "./Progress";
+import Button from "./Button";
 
 class Question extends React.Component {
 
     componentDidUpdate(prevProps) {
-        if (prevProps.counter !== this.props.counter && this.props.counter < this.props.quizLength) {
-            if (this.props.selected.i) {
-                this.radioRefs[this.props.selected.i].current.checked = false;
+        const { counter, quizLength, selected, answersLocked } = this.props;
+
+        if (prevProps.counter !== counter && counter < quizLength) {
+            if (selected.i) {
+                this.radioRefs[selected.i].current.checked = false;
             }
             // Array.from(this.radioRef.current.parentElement.parentElement.children)
             //     .forEach(answer => answer.children[0].checked = false);
+        }
+        if (answersLocked) {
+            for (let x in this.radioRefs) {
+                this.radioRefs[x].current.disabled = true;
+            }
+        }
+        if (!answersLocked && counter > 0 && counter < quizLength) {
+            for (let x in this.radioRefs) {
+                this.radioRefs[x].current.disabled = false;
+            }
         }
     }
 
@@ -55,10 +68,20 @@ class Question extends React.Component {
             });
     }
 
-    renderResult() {
-        const { trivia, counter, selected } = this.props;
+    renderResult(trivia, counter) {
+        const { selected } = this.props;
         if (trivia[counter].correct_answer === selected.answer) {
             return <div>Correct!!!</div>;
+        }
+    }
+
+    renderButton(counter, quizLength, nextQuestion) {
+        const { answersLocked, toggleLock } = this.props;
+
+        if (!answersLocked) {
+            return <Button text="Submit" click={toggleLock} />;
+        } else {
+            return <Button text={counter < (quizLength - 1) ? "Question " + (counter + 2) : "Results"} click={nextQuestion} />;
         }
     }
 
@@ -68,10 +91,6 @@ class Question extends React.Component {
 
         if (counter === -1) {
             return null;
-        }
-
-        if (!trivia[0]) {
-            return <div className="h3">Loading...</div>;
         }
 
         if (trivia[0] && counter < quizLength) {
@@ -85,12 +104,10 @@ class Question extends React.Component {
                             {this.renderAnswers()}
                         </div>
                         <div className="col-12 d-flex justify-content-center">
-                            <button className="btn btn-lg btn-primary" onClick={nextQuestion}>
-                                {counter < (quizLength - 1) ? "Question " + (counter + 2) : "Results"}
-                            </button>
+                            {this.renderButton(counter, quizLength, nextQuestion)}
                         </div>
                     </div>
-                    {this.renderResult()}
+                    {this.renderResult(trivia, counter)}
                 </React.Fragment>
             );
         }
@@ -105,8 +122,9 @@ const mapStateToProps = state => {
         trivia: state.trivia,
         counter: state.counter,
         quizLength: state.quizLength,
-        selected: state.selected
+        selected: state.selected,
+        answersLocked: state.answersLocked
     };
 };
 
-export default connect(mapStateToProps, { nextQuestion, selectAnswer })(Question);
+export default connect(mapStateToProps, { nextQuestion, selectAnswer, toggleLock })(Question);

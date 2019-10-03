@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { nextQuestion } from "../actions";
+import Button from "./Button";
 
 class Start extends React.Component {
     render() {
@@ -10,7 +11,8 @@ class Start extends React.Component {
         if (counter === -1) {
             return (
                 <div>
-                    <button className="btn btn-lg btn-primary" onClick={nextQuestion}>Start Quiz</button>
+                    <h2>Click to begin quiz!</h2>
+                    <Button text="Start Quiz" click={nextQuestion} />
                 </div>
             );
         }
