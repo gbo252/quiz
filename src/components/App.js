@@ -1,7 +1,23 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchQuestions } from "../actions";
 
-const App = () => {
-  return <div>App</div>;
+import Question from "./Question";
+import Results from "./Results";
+
+class App extends React.Component {
+  componentDidMount() {
+    this.props.fetchQuestions();
+  }
+
+  render() {
+    return (
+      <div>
+        <Question />
+        <Results />
+      </div>
+    );
+  }
 }
 
-export default App;
+export default connect(null, { fetchQuestions })(App);
