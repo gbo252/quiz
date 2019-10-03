@@ -1,2 +1,3 @@
 export const FETCH_QUESTIONS = "FETCH_QUESTIONS";
 export const COUNTER = "COUNTER";
+export const SELECT_ANSWER = "SELECT_ANSWER";

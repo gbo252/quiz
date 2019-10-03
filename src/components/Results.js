@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 class Results extends React.Component {
     render() {
-        if (this.props.counter >= this.props.quizLength) {
+        if (this.props.counter === this.props.quizLength) {
             return <div>Your Results!</div>;
         }
         return null;
