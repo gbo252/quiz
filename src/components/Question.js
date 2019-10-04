@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import {
     nextQuestion,
-    selectAnswer,
     toggleLock,
     increaseScore
 } from "../actions";
@@ -13,44 +12,6 @@ import Progress from "./Progress";
 import Button from "./Button";
 
 class Question extends React.Component {
-
-    componentDidUpdate(prevProps) {
-        const { counter, quizLength, selected, answersLocked, selectAnswer } = this.props;
-
-        if (prevProps.counter !== counter) {
-            selectAnswer();
-        }
-
-        if (prevProps.counter !== counter && counter < quizLength) {
-            if (selected.i) {
-                this.radioRefs[selected.i].current.checked = false;
-            }
-        }
-
-        if (answersLocked) {
-            for (let x in this.radioRefs) {
-                this.radioRefs[x].current.disabled = true;
-            }
-        }
-
-        if (!answersLocked && counter > 0 && counter < quizLength) {
-            for (let x in this.radioRefs) {
-                this.radioRefs[x].current.disabled = false;
-            }
-        }
-    }
-
-    radioRef1 = React.createRef();
-    radioRef2 = React.createRef();
-    radioRef3 = React.createRef();
-    radioRef4 = React.createRef();
-
-    radioRefs = {
-        1: this.radioRef1,
-        2: this.radioRef2,
-        3: this.radioRef3,
-        4: this.radioRef4
-    };
 
     renderResult() {
         const { selected, trivia, counter, answersLocked, increaseScore } = this.props;
@@ -94,7 +55,7 @@ class Question extends React.Component {
                         <h1 className="my-3">Question {counter + 1}</h1>
                         <div>{decodeHtml(trivia[counter].question)}</div>
                         <div className="col-9 d-flex justify-content-around my-4">
-                            <Answers radioRefs={this.radioRefs} />
+                            <Answers />
                         </div>
                         <div className="mb-4">
                             {this.renderButton()}
@@ -124,7 +85,6 @@ export default connect(
     mapStateToProps,
     {
         nextQuestion,
-        selectAnswer,
         toggleLock,
         increaseScore
     }

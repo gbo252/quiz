@@ -4,10 +4,49 @@ import { selectAnswer } from "../actions";
 import { decodeHtml } from "./helper";
 
 class Answers extends React.Component {
-    render() {
-        const { answers, counter, selectAnswer } = this.props;
 
-        return answers[counter].map((q, i) => {
+    radioRef1 = React.createRef();
+    radioRef2 = React.createRef();
+    radioRef3 = React.createRef();
+    radioRef4 = React.createRef();
+
+    radioRefs = {
+        1: this.radioRef1,
+        2: this.radioRef2,
+        3: this.radioRef3,
+        4: this.radioRef4
+    };
+
+    componentDidUpdate(prevProps) {
+        const { counter, quizLength, selected, answersLocked, selectAnswer } = this.props;
+
+        if (prevProps.counter !== counter) {
+            selectAnswer();
+        }
+
+        if (prevProps.counter !== counter && counter < quizLength) {
+            if (selected.i) {
+                this.radioRefs[selected.i].current.checked = false;
+            }
+        }
+
+        if (answersLocked) {
+            for (let x in this.radioRefs) {
+                this.radioRefs[x].current.disabled = true;
+            }
+        }
+
+        if (!answersLocked && counter > 0 && counter < quizLength) {
+            for (let x in this.radioRefs) {
+                this.radioRefs[x].current.disabled = false;
+            }
+        }
+    }
+
+    render() {
+        const { trivia, answers, counter, selectAnswer, answersLocked } = this.props;
+
+        return answers[counter].map((a, i) => {
             ++i;
             return (
                 <div className="custom-control custom-radio custom-control-inline" key={i}>
@@ -15,13 +54,16 @@ class Answers extends React.Component {
                         className="custom-control-input"
                         type="radio"
                         name="inlineRadioOptions"
-                        ref={this.props.radioRefs[i]}
+                        ref={this.radioRefs[i]}
                         id={`inlineRadio${i}`}
-                        value={q}
+                        value={a}
                         onChange={e => selectAnswer(e.target.value, i)}
                     />
-                    <label className="custom-control-label" htmlFor={`inlineRadio${i}`}>
-                        {decodeHtml(q)}
+                    <label
+                        className={"custom-control-label" + (answersLocked && trivia[counter].correct_answer === a ? " text-success font-weight-bold" : "")}
+                        htmlFor={`inlineRadio${i}`}
+                    >
+                        {decodeHtml(a)}
                     </label>
                 </div>
             );
@@ -31,8 +73,12 @@ class Answers extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        trivia: state.trivia,
         answers: state.answers,
-        counter: state.counter
+        counter: state.counter,
+        quizLength: state.quizLength,
+        selected: state.selected,
+        answersLocked: state.answersLocked
     };
 };
 
