@@ -1,7 +1,11 @@
 import { combineReducers } from "redux";
 import {
     FETCH_QUESTIONS,
+    FETCH_ANSWERS,
     COUNTER,
+    RESET_COUNTER,
+    SCORE,
+    RESET_SCORE,
     SELECT_ANSWER,
     TOGGLE_LOCK
 } from "../actions/types";
@@ -13,7 +17,16 @@ const quizLength = () => {
 const trivia = (state = [], action) => {
     switch (action.type) {
         case FETCH_QUESTIONS:
-            return [...state, ...action.payload];
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+const answers = (state = [], action) => {
+    switch (action.type) {
+        case FETCH_ANSWERS:
+            return action.payload;
         default:
             return state;
     }
@@ -23,17 +36,30 @@ const counter = (state = -1, action) => {
     switch (action.type) {
         case COUNTER:
             return ++state;
+        case RESET_COUNTER:
+            return state = -1;
         default:
             return state;
     }
 };
 
-const initalSelect = {
+const score = (state = 0, action) => {
+    switch (action.type) {
+        case SCORE:
+            return ++state;
+        case RESET_SCORE:
+            return state = 0;
+        default:
+            return state;
+    }
+};
+
+const INITAL_SELECTED_STATE = {
     answer: null,
     i: null
 };
 
-const selected = (state = initalSelect, action) => {
+const selected = (state = INITAL_SELECTED_STATE, action) => {
     switch (action.type) {
         case SELECT_ANSWER:
             return action.payload;
@@ -53,7 +79,9 @@ const answersLocked = (state = false, action) => {
 
 export default combineReducers({
     trivia,
+    answers,
     counter,
+    score,
     quizLength,
     selected,
     answersLocked

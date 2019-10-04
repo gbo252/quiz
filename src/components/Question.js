@@ -1,29 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
-import _ from "lodash";
 
-import { nextQuestion, selectAnswer, toggleLock } from "../actions";
+import {
+    nextQuestion,
+    selectAnswer,
+    toggleLock,
+    increaseScore
+} from "../actions";
 import { decodeHtml } from "./helper";
+import Answers from "./Answers";
 import Progress from "./Progress";
 import Button from "./Button";
 
 class Question extends React.Component {
 
     componentDidUpdate(prevProps) {
-        const { counter, quizLength, selected, answersLocked } = this.props;
+        const { counter, quizLength, selected, answersLocked, selectAnswer } = this.props;
+
+        if (prevProps.counter !== counter) {
+            selectAnswer();
+        }
 
         if (prevProps.counter !== counter && counter < quizLength) {
             if (selected.i) {
                 this.radioRefs[selected.i].current.checked = false;
             }
-            // Array.from(this.radioRef.current.parentElement.parentElement.children)
-            //     .forEach(answer => answer.children[0].checked = false);
         }
+
         if (answersLocked) {
             for (let x in this.radioRefs) {
                 this.radioRefs[x].current.disabled = true;
             }
         }
+
         if (!answersLocked && counter > 0 && counter < quizLength) {
             for (let x in this.radioRefs) {
                 this.radioRefs[x].current.disabled = false;
@@ -43,50 +52,34 @@ class Question extends React.Component {
         4: this.radioRef4
     };
 
-    shufflerMemoized = _.memoize(counter => _.shuffle([...this.props.trivia[counter].incorrect_answers, this.props.trivia[counter].correct_answer]));
-
-    renderAnswers() {
-        return this.shufflerMemoized(this.props.counter)
-            .map((q, i) => {
-                ++i;
-                return (
-                    <div className="custom-control custom-radio custom-control-inline" key={i}>
-                        <input
-                            className="custom-control-input"
-                            type="radio"
-                            name="inlineRadioOptions"
-                            ref={this.radioRefs[i]}
-                            id={`inlineRadio${i}`}
-                            value={q}
-                            onChange={e => this.props.selectAnswer(e.target.value, i)}
-                        />
-                        <label className="custom-control-label" htmlFor={`inlineRadio${i}`}>
-                            {decodeHtml(q)}
-                        </label>
-                    </div>
-                );
-            });
-    }
-
-    renderResult(trivia, counter) {
-        const { selected } = this.props;
-        if (trivia[counter].correct_answer === selected.answer) {
-            return <div>Correct!!!</div>;
+    renderResult() {
+        const { selected, trivia, counter, answersLocked, increaseScore } = this.props;
+        if (answersLocked) {
+            if (trivia[counter].correct_answer === selected.answer) {
+                increaseScore();
+                return <h2 className="text-success">Correct!</h2>;
+            } else {
+                return <h2 className="text-danger">Incorrect</h2>
+            }
         }
     }
 
-    renderButton(counter, quizLength, nextQuestion) {
-        const { answersLocked, toggleLock } = this.props;
+    renderButton() {
+        const { counter, quizLength, nextQuestion, answersLocked, toggleLock, selected } = this.props;
+        let atts = { disabled: true };
 
-        if (!answersLocked) {
-            return <Button text="Submit" click={toggleLock} />;
-        } else {
-            return <Button text={counter < (quizLength - 1) ? "Question " + (counter + 2) : "Results"} click={nextQuestion} />;
+        if (selected.answer) {
+            atts.disabled = false;
         }
+
+        let submit = <Button text="Submit" click={toggleLock} atts={atts} />;
+        let next = <Button text={counter < (quizLength - 1) ? "Next Question" : "Results"} click={nextQuestion} />;
+
+        return answersLocked ? next : submit;
     }
 
     render() {
-        const { trivia, counter, nextQuestion, quizLength } = this.props;
+        const { trivia, counter, quizLength } = this.props;
         const progress = (100 / quizLength) * (counter + 1);
 
         if (counter === -1) {
@@ -101,13 +94,13 @@ class Question extends React.Component {
                         <h1 className="my-3">Question {counter + 1}</h1>
                         <div>{decodeHtml(trivia[counter].question)}</div>
                         <div className="col-9 d-flex justify-content-around my-4">
-                            {this.renderAnswers()}
+                            <Answers radioRefs={this.radioRefs} />
                         </div>
-                        <div className="col-12 d-flex justify-content-center">
-                            {this.renderButton(counter, quizLength, nextQuestion)}
+                        <div className="mb-4">
+                            {this.renderButton()}
                         </div>
+                        {this.renderResult()}
                     </div>
-                    {this.renderResult(trivia, counter)}
                 </React.Fragment>
             );
         }
@@ -127,4 +120,12 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { nextQuestion, selectAnswer, toggleLock })(Question);
+export default connect(
+    mapStateToProps,
+    {
+        nextQuestion,
+        selectAnswer,
+        toggleLock,
+        increaseScore
+    }
+)(Question);
