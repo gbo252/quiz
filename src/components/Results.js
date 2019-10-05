@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { resetQuiz } from "../actions";
+import { resetQuiz, selectAnswer } from "../actions";
 import Button from "./Button";
 
 class Results extends React.Component {
     render() {
-        const { counter, quizLength, score, resetQuiz } = this.props;
+        const { counter, quizLength, score, resetQuiz, selectAnswer } = this.props;
 
         if (counter === quizLength) {
+            selectAnswer();
             return (
                 <div className="d-flex flex-column align-items-center mt-3">
                     <h2 className="mb-3">Your Results</h2>
@@ -29,4 +30,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { resetQuiz })(Results);
+export default connect(mapStateToProps, { resetQuiz, selectAnswer })(Results);

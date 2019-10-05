@@ -18,12 +18,12 @@ class Answers extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        const { counter, quizLength, selected, answersLocked, selectAnswer } = this.props;
+        const { counter, quizLength, selectedAnswer, answersLocked, selectAnswer } = this.props;
 
         if (prevProps.counter !== counter) {
             selectAnswer();
-            if (counter < quizLength && selected.i) {
-                this.radioRefs[selected.i].current.checked = false;
+            if (counter < quizLength && selectedAnswer.i) {
+                this.radioRefs[selectedAnswer.i].current.checked = false;
             }
         }
 
@@ -74,7 +74,7 @@ const mapStateToProps = state => {
         answers: state.answers,
         counter: state.counter,
         quizLength: state.quizLength,
-        selected: state.selected,
+        selectedAnswer: state.selectedAnswer,
         answersLocked: state.answersLocked
     };
 };

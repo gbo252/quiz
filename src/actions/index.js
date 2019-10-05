@@ -4,6 +4,8 @@ import trivia from "../apis/trivia";
 import {
     SESSION_TOKEN,
     RESPONSE_CODE,
+    FETCH_CATEGORIES,
+    SELECT_CATEGORY,
     FETCH_QUESTIONS,
     FETCH_ANSWERS,
     INCREASE_COUNTER,
@@ -14,16 +16,9 @@ import {
     RESET_SCORE
 } from "./types";
 
-export const resetQuiz = () => async (dispatch, getState) => {
-    await dispatch(fetchQuestions());
-
-    if (getState().responseCode === 4) {
-        await trivia.get(`/api_token.php?command=reset&token=${getState().sessionToken}`);
-        dispatch(fetchQuestions());
-    }
-
+export const resetQuiz = () => dispatch => {
+    dispatch(selectCategory("X"));
     dispatch(resetCounter());
-
     dispatch(resetScore());
 };
 
@@ -33,18 +28,37 @@ export const getSessionToken = () => async (dispatch) => {
     dispatch({ type: SESSION_TOKEN, payload: sessionToken.data.token });
 };
 
+export const fetchCategories = () => async (dispatch) => {
+    const response = await trivia.get("/api_category.php");
+
+    if (response.status !== 200) {
+        dispatch({ type: FETCH_CATEGORIES, payload: [{ error: true }] });
+    } else {
+        dispatch({ type: FETCH_CATEGORIES, payload: response.data.trivia_categories });
+    }
+};
+
+export const selectCategory = category => {
+    return { type: SELECT_CATEGORY, payload: category };
+};
+
 export const fetchQuestions = () => async (dispatch, getState) => {
     if (!getState().sessionToken) {
         await dispatch(getSessionToken());
     }
 
-    const response = await trivia.get(`/api.php?amount=${getState().quizLength}&category=9&difficulty=easy&type=multiple&token=${getState().sessionToken}`);
+    const response = await trivia.get(`/api.php?amount=${getState().quizLength}&category=${getState().selectedCategory}&type=multiple&token=${getState().sessionToken}`);
     
     const answersArray = response.data.results.map(x => _.shuffle([...x.incorrect_answers, x.correct_answer]));
 
     dispatch({ type: FETCH_QUESTIONS, payload: response.data.results });
     dispatch({ type: FETCH_ANSWERS, payload: answersArray });
-    dispatch({ type: RESPONSE_CODE, payload: response.data.response_code });
+    await dispatch({ type: RESPONSE_CODE, payload: response.data.response_code });
+
+    if (getState().responseCode === 4) {
+        await trivia.get(`/api_token.php?command=reset&token=${getState().sessionToken}`);
+        await dispatch(fetchQuestions());
+    }
 };
 
 export const nextQuestion = () => (dispatch, getState) => {

@@ -2,6 +2,8 @@ import { combineReducers } from "redux";
 import {
     SESSION_TOKEN,
     RESPONSE_CODE,
+    FETCH_CATEGORIES,
+    SELECT_CATEGORY,
     FETCH_QUESTIONS,
     FETCH_ANSWERS,
     INCREASE_COUNTER,
@@ -13,7 +15,7 @@ import {
 } from "../actions/types";
 
 const quizLength = () => {
-    return 3;
+    return 5;
 };
 
 const sessionToken = (state = null, action) => {
@@ -28,6 +30,24 @@ const sessionToken = (state = null, action) => {
 const responseCode = (state = null, action) => {
     switch (action.type) {
         case RESPONSE_CODE:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+const categories = (state = [], action) => {
+    switch (action.type) {
+        case FETCH_CATEGORIES:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+const selectedCategory = (state = null, action) => {
+    switch (action.type) {
+        case SELECT_CATEGORY:
             return action.payload;
         default:
             return state;
@@ -74,7 +94,7 @@ const score = (state = 0, action) => {
     }
 };
 
-const selected = (state = { answer: null, i: null }, action) => {
+const selectedAnswer = (state = { answer: null, i: null }, action) => {
     switch (action.type) {
         case SELECT_ANSWER:
             return action.payload;
@@ -95,11 +115,13 @@ const answersLocked = (state = false, action) => {
 export default combineReducers({
     sessionToken,
     responseCode,
+    categories,
+    selectedCategory,
     trivia,
     answers,
     counter,
     score,
     quizLength,
-    selected,
+    selectedAnswer,
     answersLocked
 });

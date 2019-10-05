@@ -14,9 +14,9 @@ import Button from "./Button";
 class Question extends React.Component {
 
     renderResult() {
-        const { selected, trivia, counter, answersLocked, increaseScore } = this.props;
+        const { selectedAnswer, trivia, counter, answersLocked, increaseScore } = this.props;
         if (answersLocked) {
-            if (trivia[counter].correct_answer === selected.answer) {
+            if (trivia[counter].correct_answer === selectedAnswer.answer) {
                 increaseScore();
                 return <h2 className="text-success">Correct!</h2>;
             } else {
@@ -26,10 +26,10 @@ class Question extends React.Component {
     }
 
     renderButton() {
-        const { counter, quizLength, nextQuestion, answersLocked, toggleLock, selected } = this.props;
+        const { counter, quizLength, nextQuestion, answersLocked, toggleLock, selectedAnswer } = this.props;
         let atts = { disabled: true };
 
-        if (selected.answer) {
+        if (selectedAnswer.answer) {
             atts.disabled = false;
         }
 
@@ -52,7 +52,7 @@ class Question extends React.Component {
                 <React.Fragment>
                     <Progress progress={progress} />
                     <div className="d-flex flex-column align-items-center">
-                        <h1 className="my-3">Question {counter + 1}</h1>
+                        <h1 className="my-3">Question {counter + 1} of {quizLength}</h1>
                         <div>{decodeHtml(trivia[counter].question)}</div>
                         <div className="col-9 d-flex justify-content-around my-4">
                             <Answers />
@@ -76,7 +76,7 @@ const mapStateToProps = state => {
         trivia: state.trivia,
         counter: state.counter,
         quizLength: state.quizLength,
-        selected: state.selected,
+        selectedAnswer: state.selectedAnswer,
         answersLocked: state.answersLocked
     };
 };
