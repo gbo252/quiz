@@ -6,11 +6,11 @@ import {
     RESPONSE_CODE,
     FETCH_QUESTIONS,
     FETCH_ANSWERS,
-    COUNTER,
+    INCREASE_COUNTER,
     RESET_COUNTER,
     SELECT_ANSWER,
     TOGGLE_LOCK,
-    SCORE,
+    INCREASE_SCORE,
     RESET_SCORE
 } from "./types";
 
@@ -52,7 +52,7 @@ export const nextQuestion = () => (dispatch, getState) => {
         dispatch(toggleLock());
     }
 
-    dispatch({ type: COUNTER });
+    dispatch({ type: INCREASE_COUNTER });
 };
 
 export const resetCounter = () => {
@@ -60,7 +60,7 @@ export const resetCounter = () => {
 }
 
 export const increaseScore = () => {
-    return { type: SCORE };
+    return { type: INCREASE_SCORE };
 };
 
 export const resetScore = () => {

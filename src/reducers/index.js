@@ -4,9 +4,9 @@ import {
     RESPONSE_CODE,
     FETCH_QUESTIONS,
     FETCH_ANSWERS,
-    COUNTER,
+    INCREASE_COUNTER,
     RESET_COUNTER,
-    SCORE,
+    INCREASE_SCORE,
     RESET_SCORE,
     SELECT_ANSWER,
     TOGGLE_LOCK
@@ -54,7 +54,7 @@ const answers = (state = [], action) => {
 
 const counter = (state = -1, action) => {
     switch (action.type) {
-        case COUNTER:
+        case INCREASE_COUNTER:
             return ++state;
         case RESET_COUNTER:
             return state = -1;
@@ -65,7 +65,7 @@ const counter = (state = -1, action) => {
 
 const score = (state = 0, action) => {
     switch (action.type) {
-        case SCORE:
+        case INCREASE_SCORE:
             return ++state;
         case RESET_SCORE:
             return state = 0;
@@ -74,12 +74,7 @@ const score = (state = 0, action) => {
     }
 };
 
-const INITAL_SELECTED_STATE = {
-    answer: null,
-    i: null
-};
-
-const selected = (state = INITAL_SELECTED_STATE, action) => {
+const selected = (state = { answer: null, i: null }, action) => {
     switch (action.type) {
         case SELECT_ANSWER:
             return action.payload;
