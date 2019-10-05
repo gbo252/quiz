@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import {
+    SESSION_TOKEN,
+    RESPONSE_CODE,
     FETCH_QUESTIONS,
     FETCH_ANSWERS,
     COUNTER,
@@ -12,6 +14,24 @@ import {
 
 const quizLength = () => {
     return 3;
+};
+
+const sessionToken = (state = null, action) => {
+    switch (action.type) {
+        case SESSION_TOKEN:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+const responseCode = (state = null, action) => {
+    switch (action.type) {
+        case RESPONSE_CODE:
+            return action.payload;
+        default:
+            return state;
+    }
 };
 
 const trivia = (state = [], action) => {
@@ -78,6 +98,8 @@ const answersLocked = (state = false, action) => {
 };
 
 export default combineReducers({
+    sessionToken,
+    responseCode,
     trivia,
     answers,
     counter,

@@ -1,3 +1,5 @@
+export const SESSION_TOKEN = "SESSION_TOKEN";
+export const RESPONSE_CODE = "RESPONSE_CODE";
 export const FETCH_QUESTIONS = "FETCH_QUESTIONS";
 export const FETCH_ANSWERS = "FETCH_ANSWERS";
 export const COUNTER = "COUNTER";

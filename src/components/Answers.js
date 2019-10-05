@@ -22,10 +22,7 @@ class Answers extends React.Component {
 
         if (prevProps.counter !== counter) {
             selectAnswer();
-        }
-
-        if (prevProps.counter !== counter && counter < quizLength) {
-            if (selected.i) {
+            if (counter < quizLength && selected.i) {
                 this.radioRefs[selected.i].current.checked = false;
             }
         }
