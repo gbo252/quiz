@@ -13,7 +13,8 @@ import {
     SELECT_ANSWER,
     TOGGLE_LOCK,
     INCREASE_SCORE,
-    RESET_SCORE
+    RESET_SCORE,
+    TOGGLE_LOADING
 } from "./types";
 
 export const resetQuiz = () => dispatch => {
@@ -87,4 +88,8 @@ export const selectAnswer = (answer, i) => {
 
 export const toggleLock = () => {
     return { type: TOGGLE_LOCK };
+};
+
+export const toggleLoading = () => {
+    return { type: TOGGLE_LOADING };
 };

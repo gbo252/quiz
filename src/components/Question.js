@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import {
     nextQuestion,
     toggleLock,
-    increaseScore
+    increaseScore,
+    toggleLoading
 } from "../actions";
 import { decodeHtml } from "./helper";
 import Answers from "./Answers";
 import Progress from "./Progress";
-import Button from "./Button";
 
 class Question extends React.Component {
 
@@ -26,17 +26,54 @@ class Question extends React.Component {
     }
 
     renderButton() {
-        const { counter, quizLength, nextQuestion, answersLocked, toggleLock, selectedAnswer } = this.props;
-        let atts = { disabled: true };
+        const {
+            counter,
+            quizLength,
+            nextQuestion,
+            answersLocked,
+            toggleLock,
+            selectedAnswer,
+            loading,
+            toggleLoading
+        } = this.props;
 
+        let atts = { disabled: true };
         if (selectedAnswer.answer) {
             atts.disabled = false;
         }
 
-        let submit = <Button text="Submit" click={toggleLock} atts={atts} />;
-        let next = <Button text={counter < (quizLength - 1) ? "Next Question" : "Results"} click={nextQuestion} />;
+        const onClickNext = () => {
+            if (counter === quizLength - 1) {
+                toggleLoading();
+                setTimeout(() => {
+                    nextQuestion();
+                    toggleLoading();
+                }, 1500);
+            } else {
+                nextQuestion();
+            }
+        };
 
-        return answersLocked ? next : submit;
+        if (loading) {
+            return (
+                <button className="btn btn-lg btn-primary" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                    Loading...
+                </button>
+            );
+        } else if (answersLocked) {
+            return (
+                <button className="btn btn-lg btn-primary" onClick={onClickNext}>
+                    {counter < (quizLength - 1) ? "Next Question" : "Results"}
+                </button>
+            );
+        } else {
+            return (
+                <button className="btn btn-lg btn-primary" onClick={toggleLock} {...atts}>
+                    Submit
+                </button>
+            );
+        }
     }
 
     render() {
@@ -77,7 +114,8 @@ const mapStateToProps = state => {
         counter: state.counter,
         quizLength: state.quizLength,
         selectedAnswer: state.selectedAnswer,
-        answersLocked: state.answersLocked
+        answersLocked: state.answersLocked,
+        loading: state.loading
     };
 };
 
@@ -86,6 +124,7 @@ export default connect(
     {
         nextQuestion,
         toggleLock,
-        increaseScore
+        increaseScore,
+        toggleLoading
     }
 )(Question);

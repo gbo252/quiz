@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { resetQuiz, selectAnswer } from "../actions";
-import Button from "./Button";
 
 class Results extends React.Component {
     render() {
@@ -14,7 +13,9 @@ class Results extends React.Component {
                 <div className="d-flex flex-column align-items-center mt-3">
                     <h2 className="mb-3">Your Results</h2>
                     <h4 className="mb-3">You scored {score} / {quizLength}</h4>
-                    <Button text="New Quiz" click={resetQuiz} />
+                    <button className="btn btn-lg btn-primary" onClick={resetQuiz}>
+                        New Quiz
+                    </button>
                 </div>
             );
         }

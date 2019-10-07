@@ -11,7 +11,8 @@ import {
     INCREASE_SCORE,
     RESET_SCORE,
     SELECT_ANSWER,
-    TOGGLE_LOCK
+    TOGGLE_LOCK,
+    TOGGLE_LOADING
 } from "../actions/types";
 
 const quizLength = () => {
@@ -112,6 +113,15 @@ const answersLocked = (state = false, action) => {
     }
 };
 
+const loading = (state = false, action) => {
+    switch (action.type) {
+        case TOGGLE_LOADING:
+            return !state;
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
     sessionToken,
     responseCode,
@@ -123,5 +133,6 @@ export default combineReducers({
     score,
     quizLength,
     selectedAnswer,
-    answersLocked
+    answersLocked,
+    loading
 });

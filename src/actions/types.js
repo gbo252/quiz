@@ -10,3 +10,4 @@ export const SELECT_ANSWER = "SELECT_ANSWER";
 export const TOGGLE_LOCK = "TOGGLE_LOCK";
 export const INCREASE_SCORE = "INCREASE_SCORE";
 export const RESET_SCORE = "RESET_SCORE";
+export const TOGGLE_LOADING = "TOGGLE_LOADING";

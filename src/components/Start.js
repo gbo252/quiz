@@ -1,8 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { fetchQuestions, nextQuestion, selectCategory } from "../actions";
-import Button from "./Button";
+import {
+    fetchQuestions,
+    nextQuestion,
+    selectCategory,
+    toggleLoading
+} from "../actions";
 
 class Start extends React.Component {
     renderCategories() {
@@ -31,14 +35,47 @@ class Start extends React.Component {
         }
     }
 
-    render() {
-        const { counter, selectCategory, selectedCategory, fetchQuestions, nextQuestion } = this.props;
+    renderButton() {
+        const { selectedCategory, fetchQuestions, nextQuestion, loading, toggleLoading } = this.props;
 
         let atts = { disabled: true };
 
         if (selectedCategory !== null && selectedCategory !== "X") {
             atts.disabled = false;
         }
+
+        const onClick = async () => {
+            toggleLoading();
+            await fetchQuestions();
+            nextQuestion();
+            toggleLoading();
+        }
+
+        if (!loading) {
+            return (
+                <button
+                    className="btn btn-lg btn-primary"
+                    onClick={onClick}
+                    {...atts}>
+                    Start Quiz
+                </button>
+            );
+        } else {
+            return (
+                <button className="btn btn-lg btn-primary" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                    Loading...
+                </button>
+            );
+        }
+    }
+
+    render() {
+        const { counter, selectCategory } = this.props;
+
+        const onChange = e => {
+            selectCategory(e.target.options[e.target.selectedIndex].value)
+        };
 
         if (counter === -1) {
             return (
@@ -47,7 +84,7 @@ class Start extends React.Component {
                     <form>
                         <div className="form-group mt-4">
                             <select
-                                onChange={e => selectCategory(e.target.options[e.target.selectedIndex].value)}
+                                onChange={e => onChange(e)}
                                 className="custom-select"
                             >
                                 {this.renderCategories()}
@@ -55,11 +92,7 @@ class Start extends React.Component {
                         </div>
                     </form>
                     <div className="mt-4">
-                        <Button
-                            text="Start Quiz"
-                            click={async () => { await fetchQuestions(); nextQuestion(); }}
-                            atts={atts}
-                        />
+                        {this.renderButton()}
                     </div>
                 </div>
             );
@@ -73,8 +106,17 @@ const mapStateToProps = state => {
     return {
         counter: state.counter,
         categories: state.categories,
-        selectedCategory: state.selectedCategory
+        selectedCategory: state.selectedCategory,
+        loading: state.loading
     };
 };
 
-export default connect(mapStateToProps, { fetchQuestions, nextQuestion, selectCategory })(Start);
+export default connect(
+    mapStateToProps,
+    {
+        fetchQuestions,
+        nextQuestion,
+        selectCategory,
+        toggleLoading
+    }
+)(Start);
