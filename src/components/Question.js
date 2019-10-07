@@ -14,8 +14,15 @@ import Progress from "./Progress";
 class Question extends React.Component {
 
     renderResult() {
-        const { selectedAnswer, trivia, counter, answersLocked, increaseScore } = this.props;
-        if (answersLocked) {
+        const {
+            selectedAnswer,
+            trivia,
+            counter,
+            answersLocked,
+            increaseScore,
+            loading
+        } = this.props;
+        if (answersLocked && !loading) {
             if (trivia[counter].correct_answer === selectedAnswer.answer) {
                 increaseScore();
                 return <h2 className="text-success">Correct!</h2>;
@@ -57,7 +64,11 @@ class Question extends React.Component {
         if (loading) {
             return (
                 <button className="btn btn-lg btn-primary" type="button" disabled>
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
+                    <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                    />
                     Loading...
                 </button>
             );
