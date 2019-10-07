@@ -9,6 +9,7 @@ import {
 } from "../actions";
 
 class Start extends React.Component {
+    
     renderCategories() {
         const { categories } = this.props;
 

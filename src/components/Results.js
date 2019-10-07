@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { resetQuiz, selectAnswer } from "../actions";
 
 class Results extends React.Component {
+    
     renderResultText() {
         const { quizLength, score } = this.props;
 

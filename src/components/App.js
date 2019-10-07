@@ -7,6 +7,7 @@ import Question from "./Question";
 import Results from "./Results";
 
 class App extends React.Component {
+  
   componentDidMount() {
     this.props.fetchCategories();
   }

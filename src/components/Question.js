@@ -91,11 +91,7 @@ class Question extends React.Component {
         const { trivia, counter, quizLength } = this.props;
         const progress = (100 / quizLength) * (counter + 1);
 
-        if (counter === -1) {
-            return null;
-        }
-
-        if (trivia[0] && counter < quizLength) {
+        if (trivia[0] && counter < quizLength && counter >= 0) {
             return (
                 <React.Fragment>
                     <Progress progress={progress} />
