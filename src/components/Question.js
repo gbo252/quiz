@@ -1,15 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import { CSSTransition } from 'react-transition-group';
 
 import {
     nextQuestion,
     toggleLock,
     increaseScore,
-    toggleLoading
+    toggleLoading,
+    toggleAnimate
 } from "../actions";
 import { decodeHtml } from "./helper";
 import Answers from "./Answers";
 import Progress from "./Progress";
+import "./Question.css";
 
 class Question extends React.Component {
 
@@ -45,9 +48,7 @@ class Question extends React.Component {
         } = this.props;
 
         let atts = { disabled: true };
-        if (selectedAnswer.answer) {
-            atts.disabled = false;
-        }
+        if (selectedAnswer.answer) { atts.disabled = false; }
 
         const onClickNext = () => {
             if (counter === quizLength - 1) {
@@ -88,24 +89,31 @@ class Question extends React.Component {
     }
 
     render() {
-        const { trivia, counter, quizLength } = this.props;
+        const { trivia, counter, quizLength, animate, toggleAnimate } = this.props;
         const progress = (100 / quizLength) * (counter + 1);
 
         if (trivia[0] && counter < quizLength && counter >= 0) {
             return (
                 <React.Fragment>
                     <Progress progress={progress} />
-                    <div className="d-flex flex-column align-items-center">
-                        <h1 className="my-3">Question {counter + 1} of {quizLength}</h1>
-                        <div>{decodeHtml(trivia[counter].question)}</div>
-                        <div className="col-9 d-flex justify-content-around my-4">
-                            <Answers />
+                    <CSSTransition
+                        in={animate}
+                        timeout={1000}
+                        classNames="fade"
+                        onExit={() => toggleAnimate()}
+                    >
+                        <div className="d-flex flex-column align-items-center">
+                            <h1 className="my-3">Question {counter + 1} of {quizLength}</h1>
+                            <div>{decodeHtml(trivia[counter].question)}</div>
+                            <div className="col-9 d-flex justify-content-around my-4">
+                                <Answers />
+                            </div>
+                            <div className="mb-4">
+                                {this.renderButton()}
+                            </div>
+                            {this.renderResult()}
                         </div>
-                        <div className="mb-4">
-                            {this.renderButton()}
-                        </div>
-                        {this.renderResult()}
-                    </div>
+                    </CSSTransition>
                 </React.Fragment>
             );
         }
@@ -122,7 +130,8 @@ const mapStateToProps = state => {
         quizLength: state.quizLength,
         selectedAnswer: state.selectedAnswer,
         answersLocked: state.answersLocked,
-        loading: state.loading
+        loading: state.loading,
+        animate: state.animate
     };
 };
 
@@ -132,6 +141,7 @@ export default connect(
         nextQuestion,
         toggleLock,
         increaseScore,
-        toggleLoading
+        toggleLoading,
+        toggleAnimate
     }
 )(Question);

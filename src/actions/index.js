@@ -14,7 +14,8 @@ import {
     TOGGLE_LOCK,
     INCREASE_SCORE,
     RESET_SCORE,
-    TOGGLE_LOADING
+    TOGGLE_LOADING,
+    TOGGLE_ANIMATE
 } from "./types";
 
 export const resetQuiz = () => dispatch => {
@@ -68,6 +69,7 @@ export const nextQuestion = () => (dispatch, getState) => {
     }
 
     dispatch({ type: INCREASE_COUNTER });
+    dispatch({ type: TOGGLE_ANIMATE });
 };
 
 export const resetCounter = () => {
@@ -92,4 +94,8 @@ export const toggleLock = () => {
 
 export const toggleLoading = () => {
     return { type: TOGGLE_LOADING };
+};
+
+export const toggleAnimate = () => {
+    return { type: TOGGLE_ANIMATE };
 };

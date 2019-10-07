@@ -1,16 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import { confetti } from "../confetti/confetti";
 
 import { resetQuiz, selectAnswer } from "../actions";
 
 class Results extends React.Component {
-    
+
     renderResultText() {
         const { quizLength, score } = this.props;
-
+        
         const percent = (score / quizLength) * 100;
-
+        
         if (percent === 100) {
+            confetti.start(4000);
             return "Top marks, you smashed it!!!";
         } else if (percent >= 75) {
             return "Nearly full marks, good job!";
