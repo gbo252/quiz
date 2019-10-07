@@ -9,7 +9,7 @@ import {
 } from "../actions";
 
 class Start extends React.Component {
-    
+
     renderCategories() {
         const { categories } = this.props;
 
@@ -23,14 +23,14 @@ class Start extends React.Component {
                 return <option value="error" key="error">Server Error</option>;
             } else {
                 return [<option value="X" key="X">Choose category...</option>]
-                    .concat(categories.sort((a, b) => {
-                        if (a.name < b.name) { return -1; }
-                        if (b.name < a.name) { return 1; }
-                        return 0;
-                    }).map(category => {
+                    .concat(categories.map(category => {
                         return <option value={category.id} key={category.id}>
                             {category.name.replace(/Entertainment:\s/, "").replace(/Science:\s/, "")}
                         </option>;
+                    }).sort((a, b) => {
+                        if (a.props.children < b.props.children) { return -1; }
+                        if (a.props.children > b.props.children) { return 1; }
+                        return 0;
                     }));
             }
         }
