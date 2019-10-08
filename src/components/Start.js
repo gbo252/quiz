@@ -10,6 +10,14 @@ import {
 
 class Start extends React.Component {
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.counter !== this.props.counter) {
+            if (this.props.counter === -1) {
+                this.type();
+            }
+        }
+    }
+
     renderCategories() {
         const { categories } = this.props;
 
@@ -22,10 +30,10 @@ class Start extends React.Component {
             if (categories[0].error) {
                 return <option value="error" key="error">Server Error</option>;
             } else {
-                return [<option value="X" key="X">Choose category...</option>]
+                return [<option value="X" key="X">CATEGORIES...</option>]
                     .concat(categories.map(category => {
                         return <option value={category.id} key={category.id}>
-                            {category.name.replace(/Entertainment:\s/, "").replace(/Science:\s/, "")}
+                            {category.name.replace(/Entertainment:\s/, "").replace(/Science:\s/, "").toUpperCase()}
                         </option>;
                     }).sort((a, b) => {
                         if (a.props.children < b.props.children) { return -1; }
@@ -55,19 +63,41 @@ class Start extends React.Component {
         if (!loading) {
             return (
                 <button
-                    className="btn btn-lg btn-primary"
+                    className="btn btn-lg btn-danger"
                     onClick={onClick}
                     {...atts}>
-                    Start Quiz
+                    BEGIN QUIZ
                 </button>
             );
         } else {
             return (
-                <button className="btn btn-lg btn-primary" type="button" disabled>
+                <button className="btn btn-lg btn-danger" type="button" disabled>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
-                    Loading...
+                    LOADING...
                 </button>
             );
+        }
+    }
+
+    instructionsRef = React.createRef();
+
+    type() {
+        let i = 0;
+        let txt = "CHOOSE A CATEGORY...";
+        let speed = 100;
+
+        const typeWriter = () => {
+            if (i < txt.length) {
+                this.instructionsRef.current.innerHTML += txt.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        if (this.instructionsRef.current) {
+            if (this.instructionsRef.current.innerHTML === "") {
+                typeWriter();
+            }
         }
     }
 
@@ -81,7 +111,7 @@ class Start extends React.Component {
         if (counter === -1) {
             return (
                 <div className="d-flex flex-column align-items-center mt-3">
-                    <h2>Click below to begin quiz!</h2>
+                    <h2 ref={this.instructionsRef}>{this.type()}</h2>
                     <form>
                         <div className="form-group mt-4">
                             <select

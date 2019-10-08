@@ -1,0 +1,19 @@
+.list-group-item {
+    user-select: none;
+    margin-bottom: 7px;
+    width: 85vw;
+    max-width: 600px;
+}
+
+.list-group input[type="radio"] {
+    display: none;
+}
+
+.list-group input[type="radio"]+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group input[type="radio"]:checked + .list-group-item {
+    color: white;
+    background-color: rgba(20, 16, 56, 0.842);
+  }

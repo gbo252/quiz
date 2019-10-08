@@ -1,0 +1,28 @@
+.keyboard {
+    background-image: url("../images/keyboard_desktop.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: padding 750ms;
+}
+
+.slim-keyboard {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.quiz {
+    transition: max-width 1s;
+}
+
+.slim-quiz {
+    max-width: 300px;
+}
+
+@media only screen and (max-width: 560px) {
+    .keyboard-bg {
+        background-image: url("../images/keyboard_mobile.jpg");
+    }
+}

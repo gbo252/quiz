@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux"
+
+import "../css/Answers.css";
 import { selectAnswer } from "../actions";
 import { decodeHtml } from "./helper";
 
@@ -17,9 +19,8 @@ class Answers extends React.Component {
         return answers[counter].map((a, i) => {
             ++i;
             return (
-                <div className="custom-control custom-radio custom-control-inline" key={i}>
+                <React.Fragment key={i}>
                     <input
-                        className="custom-control-input"
                         type="radio"
                         name="inlineRadioOptions"
                         id={`inlineRadio${i}`}
@@ -29,12 +30,12 @@ class Answers extends React.Component {
                         disabled={answersLocked}
                     />
                     <label
-                        className={"custom-control-label" + (answersLocked && trivia[counter].correct_answer === a ? " text-success font-weight-bold" : "")}
+                        className={"list-group-item list-group-item-action pr-5" + (answersLocked && trivia[counter].correct_answer === a ? " text-success font-weight-bold" : "")}
                         htmlFor={`inlineRadio${i}`}
                     >
                         {decodeHtml(a)}
                     </label>
-                </div>
+                </React.Fragment>
             );
         });
     }

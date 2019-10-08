@@ -15,11 +15,13 @@ class Results extends React.Component {
             confetti.start(4000);
             return "Top marks, you smashed it!!!";
         } else if (percent >= 75) {
-            return "Nearly full marks, good job!";
+            return "Nearly full marks, excellent job!";
         } else if (percent >= 50) {
-            return "Not bad!";
+            return "Good job!";
+        } else if (percent >= 25) {
+            return "Better than nothing...";
         } else if (percent > 0) {
-            return "Could be better, try again!";
+            return "Try again!";
         } else {
             return "Better luck next time!";
         }
@@ -33,9 +35,9 @@ class Results extends React.Component {
             return (
                 <div className="d-flex flex-column align-items-center mt-3">
                     <h2 className="mb-3">Your Results</h2>
-                    <p className="mb-3 display-3">You scored {score} / {quizLength}</p>
+                    <p className="mb-3 display-4">You scored {score} / {quizLength}</p>
                     <p className="mb-3">{this.renderResultText()}</p>
-                    <button className="btn btn-lg btn-primary" onClick={resetQuiz}>
+                    <button className="btn btn-lg btn-danger" onClick={resetQuiz}>
                         New Quiz
                     </button>
                 </div>
