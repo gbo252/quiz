@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import "../css/Start.css";
 import {
     fetchQuestions,
     nextQuestion,
@@ -9,6 +10,10 @@ import {
 } from "../actions";
 
 class Start extends React.Component {
+
+    first = true;
+
+    instructionsRef = React.createRef();
 
     componentDidUpdate(prevProps) {
         if (prevProps.counter !== this.props.counter) {
@@ -22,10 +27,7 @@ class Start extends React.Component {
         const { categories } = this.props;
 
         if (categories.length === 0) {
-            return [
-                <option value="loading" key="loading">Loading...</option>,
-                <option value="sizer" key="sizer">Japanese Anime & Manga</option>
-            ];
+            return <option value="loading" key="loading">Loading...</option>;
         } else {
             if (categories[0].error) {
                 return <option value="error" key="error">Server Error</option>;
@@ -63,7 +65,7 @@ class Start extends React.Component {
         if (!loading) {
             return (
                 <button
-                    className="btn btn-lg btn-danger"
+                    className="btn btn-lg btn-secondary"
                     onClick={onClick}
                     {...atts}>
                     BEGIN QUIZ
@@ -71,15 +73,13 @@ class Start extends React.Component {
             );
         } else {
             return (
-                <button className="btn btn-lg btn-danger" type="button" disabled>
+                <button className="btn btn-lg btn-secondary" type="button" disabled>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
                     LOADING...
                 </button>
             );
         }
     }
-
-    instructionsRef = React.createRef();
 
     type() {
         let i = 0;
@@ -88,15 +88,22 @@ class Start extends React.Component {
 
         const typeWriter = () => {
             if (i < txt.length) {
-                this.instructionsRef.current.innerHTML += txt.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
+                if (this.instructionsRef.current) {
+                    this.instructionsRef.current.innerHTML += txt.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, speed);
+                }
             }
         }
 
         if (this.instructionsRef.current) {
-            if (this.instructionsRef.current.innerHTML === "") {
-                typeWriter();
+            if (this.instructionsRef.current.innerHTML === "&nbsp;") {
+                if (this.first) {
+                    typeWriter();
+                    this.first = false;
+                } else {
+                    this.instructionsRef.current.innerHTML = txt;
+                }
             }
         }
     }
@@ -110,18 +117,17 @@ class Start extends React.Component {
 
         if (counter === -1) {
             return (
-                <div className="d-flex flex-column align-items-center mt-3">
-                    <h2 ref={this.instructionsRef}>{this.type()}</h2>
-                    <form>
-                        <div className="form-group mt-4">
-                            <select
-                                onChange={e => onChange(e)}
-                                className="custom-select"
-                            >
-                                {this.renderCategories()}
-                            </select>
-                        </div>
-                    </form>
+                <div className="d-flex flex-column align-items-center mt-3 mw-25">
+                    <h2 ref={this.instructionsRef}>
+                        {this.type()}
+                        &nbsp;
+                    </h2>
+                    <select
+                        onChange={e => onChange(e)}
+                        className="custom-select mt-4"
+                    >
+                        {this.renderCategories()}
+                    </select>
                     <div className="mt-4">
                         {this.renderButton()}
                     </div>

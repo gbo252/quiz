@@ -13,8 +13,22 @@ class Answers extends React.Component {
         }
     }
 
+    renderClassName(a) {
+        const { trivia, counter, answersLocked, selectedAnswer } = this.props;
+
+        if (answersLocked) {
+            if (trivia[counter].correct_answer === a) {
+                return " bg-success text-white";
+            } else {
+                if (selectedAnswer.answer === a) {
+                    return " bg-danger text-white";
+                }
+            }
+        }
+    }
+
     render() {
-        const { trivia, answers, counter, selectAnswer, answersLocked, selectedAnswer } = this.props;
+        const { answers, counter, selectAnswer, answersLocked, selectedAnswer } = this.props;
 
         return answers[counter].map((a, i) => {
             ++i;
@@ -30,7 +44,7 @@ class Answers extends React.Component {
                         disabled={answersLocked}
                     />
                     <label
-                        className={"list-group-item list-group-item-action pr-5" + (answersLocked && trivia[counter].correct_answer === a ? " text-success font-weight-bold" : "")}
+                        className={"list-group-item list-group-item-action pr-5" + this.renderClassName(a)}
                         htmlFor={`inlineRadio${i}`}
                     >
                         {decodeHtml(a)}

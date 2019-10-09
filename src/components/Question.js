@@ -28,9 +28,6 @@ class Question extends React.Component {
         if (answersLocked && !loading) {
             if (trivia[counter].correct_answer === selectedAnswer.answer) {
                 increaseScore();
-                return <h2 className="text-success">Correct!</h2>;
-            } else {
-                return <h2 className="text-danger">Incorrect</h2>
             }
         }
     }
@@ -64,7 +61,7 @@ class Question extends React.Component {
 
         if (loading) {
             return (
-                <button className="btn btn-lg btn-danger" type="button" disabled>
+                <button className="btn btn-lg btn-secondary" type="button" disabled>
                     <span
                         className="spinner-border spinner-border-sm"
                         role="status"
@@ -75,13 +72,16 @@ class Question extends React.Component {
             );
         } else if (answersLocked) {
             return (
-                <button className="btn btn-lg btn-danger" onClick={onClickNext}>
+                <button
+                    className="btn btn-lg btn-warning"
+                    onClick={onClickNext}
+                >
                     {counter < (quizLength - 1) ? "NEXT QUESTION" : "GO TO RESULTS"}
                 </button>
             );
         } else {
             return (
-                <button className="btn btn-lg btn-danger" onClick={toggleLock} {...atts}>
+                <button className="btn btn-lg btn-secondary" onClick={toggleLock} {...atts}>
                     SUBMIT
                 </button>
             );
@@ -90,12 +90,12 @@ class Question extends React.Component {
 
     render() {
         const { trivia, counter, quizLength, animate, toggleAnimate } = this.props;
-        const progress = (100 / quizLength) * (counter + 1);
+        const progress = (100 / quizLength + 1) * counter;
 
         if (trivia[0] && counter < quizLength && counter >= 0) {
             return (
                 <React.Fragment>
-                    <Progress progress={progress} />
+                    <Progress progress={progress} counter={counter} quizLength={quizLength} />
                     <CSSTransition
                         in={animate}
                         timeout={1000}

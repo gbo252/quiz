@@ -2,15 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { confetti } from "../confetti/confetti";
 
+import Progress from "./Progress";
 import { resetQuiz, selectAnswer } from "../actions";
 
 class Results extends React.Component {
 
     renderResultText() {
         const { quizLength, score } = this.props;
-        
+
         const percent = (score / quizLength) * 100;
-        
+
         if (percent === 100) {
             confetti.start(4000);
             return "Top marks, you smashed it!!!";
@@ -19,7 +20,7 @@ class Results extends React.Component {
         } else if (percent >= 50) {
             return "Good job!";
         } else if (percent >= 25) {
-            return "Better than nothing...";
+            return "Better than nothing I suppose...";
         } else if (percent > 0) {
             return "Try again!";
         } else {
@@ -33,14 +34,17 @@ class Results extends React.Component {
         if (counter === quizLength) {
             selectAnswer();
             return (
-                <div className="d-flex flex-column align-items-center mt-3">
-                    <h2 className="mb-3">Your Results</h2>
-                    <p className="mb-3 display-4">You scored {score} / {quizLength}</p>
-                    <p className="mb-3">{this.renderResultText()}</p>
-                    <button className="btn btn-lg btn-danger" onClick={resetQuiz}>
-                        New Quiz
+                <React.Fragment>
+                    <Progress progress={100} counter={counter} quizLength={quizLength} />
+                    <div className="d-flex flex-column align-items-center mt-3">
+                        <h2 className="mb-3">Your Results</h2>
+                        <p className="mb-3 display-4">You scored {score} / {quizLength}</p>
+                        <p className="mb-3">{this.renderResultText()}</p>
+                        <button className="btn btn-lg btn-warning" onClick={resetQuiz}>
+                            New Quiz
                     </button>
-                </div>
+                    </div>
+                </React.Fragment>
             );
         }
         return null;
