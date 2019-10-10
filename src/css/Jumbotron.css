@@ -15,6 +15,8 @@
 
 .quiz {
     transition: max-width 1s;
+    max-width: 100%;
+    height: auto;
 }
 
 .slim-quiz {

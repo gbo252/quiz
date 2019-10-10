@@ -17,7 +17,7 @@ class Jumbotron extends React.Component {
                     <img
                         src={quiz}
                         className={
-                            "img-fluid quiz d-block"
+                            "quiz"
                             + (this.props.counter >= 0 ? " slim-quiz" : "")
                         }
                         alt="quiz"
