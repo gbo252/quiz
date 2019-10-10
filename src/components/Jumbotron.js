@@ -14,16 +14,14 @@ class Jumbotron extends React.Component {
                 }
             >
                 <div className="container d-flex justify-content-center">
-                    <div className="d-block">
-                        <img
-                            src={quiz}
-                            className={
-                                "img-fluid quiz"
-                                + (this.props.counter >= 0 ? " slim-quiz" : "")
-                            }
-                            alt="quiz"
-                        />
-                    </div>
+                    <img
+                        src={quiz}
+                        className={
+                            "img-fluid quiz d-block"
+                            + (this.props.counter >= 0 ? " slim-quiz" : "")
+                        }
+                        alt="quiz"
+                    />
                 </div>
             </div>
         );
