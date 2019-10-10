@@ -8,7 +8,7 @@ const Progress = ({ progress, counter, quizLength }) => {
         <div>
             <CSSTransition
                 in={counter >= 0 && counter < quizLength}
-                timeout={1000}
+                timeout={1500}
                 classNames="grow"
                 appear={true}
             >
