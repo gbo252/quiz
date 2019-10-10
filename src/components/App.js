@@ -18,7 +18,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Jumbotron />
-        <div className="container">
+        <div className="container text-white-50">
           <Start />
           <Question />
           <Results />

@@ -61,7 +61,7 @@ class Question extends React.Component {
 
         if (loading) {
             return (
-                <button className="btn btn-lg btn-secondary" type="button" disabled>
+                <button className="btn btn-lg btn-warning" type="button" disabled>
                     <span
                         className="spinner-border spinner-border-sm"
                         role="status"
@@ -103,7 +103,7 @@ class Question extends React.Component {
                         onExit={() => toggleAnimate()}
                     >
                         <div className="d-flex flex-column align-items-center">
-                            <h1 className="my-3">QUESTION {counter + 1} of {quizLength}</h1>
+                            <p className="h4 my-3">QUESTION {counter + 1} of {quizLength}</p>
                             <div>{decodeHtml(trivia[counter].question)}</div>
                             <div className="list-group my-4">
                                 <Answers />

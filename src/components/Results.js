@@ -20,7 +20,7 @@ class Results extends React.Component {
         } else if (percent >= 50) {
             return "Good job!";
         } else if (percent >= 25) {
-            return "Better than nothing I suppose...";
+            return "OK score, but you can do better!";
         } else if (percent > 0) {
             return "Try again!";
         } else {
@@ -37,8 +37,8 @@ class Results extends React.Component {
                 <React.Fragment>
                     <Progress progress={100} counter={counter} quizLength={quizLength} />
                     <div className="d-flex flex-column align-items-center mt-3">
-                        <h2 className="mb-3">Your Results</h2>
-                        <p className="mb-3 display-4">You scored {score} / {quizLength}</p>
+                        <p className="mb-3 h3">Your Results</p>
+                        <p className="mb-3 h4">You scored {score} / {quizLength}</p>
                         <p className="mb-3">{this.renderResultText()}</p>
                         <button className="btn btn-lg btn-warning" onClick={resetQuiz}>
                             New Quiz

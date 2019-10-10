@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import "../css/Start.css";
 import {
     fetchQuestions,
     nextQuestion,
@@ -27,14 +26,14 @@ class Start extends React.Component {
         const { categories } = this.props;
 
         if (categories.length === 0) {
-            return <option value="loading" key="loading">Loading...</option>;
+            return <option class="text-dark" value="loading" key="loading">LOADING...</option>;
         } else {
             if (categories[0].error) {
-                return <option value="error" key="error">Server Error</option>;
+                return <option class="text-dark" value="error" key="error">Server Error</option>;
             } else {
-                return [<option value="X" key="X">CATEGORIES...</option>]
+                return [<option class="text-dark" value="X" key="X">CATEGORIES...</option>]
                     .concat(categories.map(category => {
-                        return <option value={category.id} key={category.id}>
+                        return <option class="text-dark" value={category.id} key={category.id}>
                             {category.name.replace(/Entertainment:\s/, "").replace(/Science:\s/, "").toUpperCase()}
                         </option>;
                     }).sort((a, b) => {
@@ -65,7 +64,10 @@ class Start extends React.Component {
         if (!loading) {
             return (
                 <button
-                    className="btn btn-lg btn-secondary"
+                    className={
+                        "btn btn-lg"
+                        + ((selectedCategory !== null && selectedCategory !== "X") ? " btn-warning" : " btn-secondary")
+                    }
                     onClick={onClick}
                     {...atts}>
                     BEGIN QUIZ
@@ -73,7 +75,7 @@ class Start extends React.Component {
             );
         } else {
             return (
-                <button className="btn btn-lg btn-secondary" type="button" disabled>
+                <button className="btn btn-lg btn-warning" type="button" disabled>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
                     LOADING...
                 </button>
@@ -99,8 +101,10 @@ class Start extends React.Component {
         if (this.instructionsRef.current) {
             if (this.instructionsRef.current.innerHTML === "&nbsp;") {
                 if (this.first) {
-                    typeWriter();
-                    this.first = false;
+                    setTimeout(() => {
+                        typeWriter();
+                        this.first = false;
+                    }, 750);
                 } else {
                     this.instructionsRef.current.innerHTML = txt;
                 }
@@ -117,18 +121,19 @@ class Start extends React.Component {
 
         if (counter === -1) {
             return (
-                <div className="d-flex flex-column align-items-center mt-3 mw-25">
-                    <h2 ref={this.instructionsRef}>
+                <div className="row d-flex justify-content-center align-items-around mw-25">
+                    <p ref={this.instructionsRef} className="col-12 h4 text-center pt-3 mb-0">
                         {this.type()}
                         &nbsp;
-                    </h2>
+                    </p>
                     <select
                         onChange={e => onChange(e)}
-                        className="custom-select mt-4"
+                        className="col-10 my-5 form-control form-control-lg text-white"
+                        style={{ backgroundColor: "transparent" }}
                     >
                         {this.renderCategories()}
                     </select>
-                    <div className="mt-4">
+                    <div className="col-12 d-flex justify-content-center mb-2">
                         {this.renderButton()}
                     </div>
                 </div>

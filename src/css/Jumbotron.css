@@ -1,11 +1,13 @@
 .keyboard {
-    background-image: url("../images/keyboard_desktop.jpg");
+    background-image: url("../images/keyboard.jpg");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
+    padding: 4rem 2rem;
     transition: padding 750ms ease-in-out 200ms;
+    border-bottom: 2px solid white;
 }
 
 .slim-keyboard {
@@ -18,11 +20,5 @@
 }
 
 .slim-quiz {
-    max-width: 300px;
-}
-
-@media only screen and (max-width: 560px) {
-    .keyboard-bg {
-        background-image: url("../images/keyboard_mobile.jpg");
-    }
+    max-width: 250px;
 }

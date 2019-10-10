@@ -8,12 +8,12 @@ const Progress = ({ progress, counter, quizLength }) => {
         <div>
             <CSSTransition
                 in={counter >= 0 && counter < quizLength}
-                timeout={1500}
+                timeout={1250}
                 classNames="grow"
                 appear={true}
             >
                 <div className="progress">
-                    <div className="progress-bar bg-dark" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+                    <div className="progress-bar bg-warning" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </CSSTransition>
         </div>
