@@ -90,7 +90,7 @@ class Question extends React.Component {
 
     render() {
         const { trivia, counter, quizLength, animate, toggleAnimate } = this.props;
-        const progress = (100 / quizLength + 1) * counter;
+        const progress = (100 / (quizLength - 1)) * counter;
 
         if (trivia[0] && counter < quizLength && counter >= 0) {
             return (
