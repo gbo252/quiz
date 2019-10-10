@@ -5,15 +5,9 @@
     -o-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
-    padding: 4rem 2rem;
-    border-bottom: 2px solid white;
     background-position-x: center;
-    transition: padding 750ms ease-in-out 200ms;
-}
-
-.slim-keyboard {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 1rem;
+    border-bottom: 2px solid white;
 }
 
 .quiz {
@@ -21,5 +15,5 @@
 }
 
 .slim-quiz {
-    max-width: 250px;
+    max-width: 200px;
 }

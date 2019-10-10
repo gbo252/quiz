@@ -10,12 +10,7 @@ class Jumbotron extends React.Component {
         const { counter, quizLength } = this.props;
 
         return (
-            <div
-                className={
-                    "jumbotron jumbotron-fluid keyboard mb-3"
-                    + (counter >= 0 && counter < quizLength ? " slim-keyboard" : "")
-                }
-            >
+            <div className={"jumbotron jumbotron-fluid keyboard mb-3"}>
                 <img
                     src={quiz}
                     className={

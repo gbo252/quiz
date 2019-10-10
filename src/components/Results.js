@@ -6,10 +6,19 @@ import { resetQuiz, selectAnswer } from "../actions";
 
 class Results extends React.Component {
 
-    renderResultText() {
-        const { quizLength, score } = this.props;
+    scoreRef = React.createRef();
+    wordRef = React.createRef();
 
-        const percent = (score / quizLength) * 100;
+    componentDidUpdate(prevProps) {
+        if (prevProps.counter !== this.props.counter) {
+            if (this.props.counter === this.props.quizLength) {
+                this.type2();
+            }
+        }
+    }
+
+    renderResultText() {
+        const percent = (this.props.score / this.props.quizLength) * 100;
 
         if (percent === 100) {
             confetti.start(4000);
@@ -21,23 +30,50 @@ class Results extends React.Component {
         } else if (percent >= 25) {
             return "NOT BAD, BUT YOU CAN DO BETTER!";
         } else if (percent > 0) {
-            return "TRY AGAIN!";
+            return "TRY AGAIN...";
         } else {
             return "BETTER LUCK NEXT TIME!";
         }
     }
 
+    type2() {
+        let j = 0;
+        let txt = `YOU SCORED ${this.props.score}/${this.props.quizLength}`;
+        let txt2 = this.renderResultText();
+        let speed = 100;
+
+        const typeWriter2 = (text, ref) => {
+            if (j < text.length) {
+                if (ref.current) {
+                    ref.current.innerHTML += text.charAt(j);
+                    j++;
+                    setTimeout(() => typeWriter2(text, ref), speed);
+                }
+            }
+        }
+
+        if (this.scoreRef.current) {
+            setTimeout(() => {
+                typeWriter2(txt, this.scoreRef);
+            }, 750);
+            setTimeout(() => {
+                j = 0;
+                typeWriter2(txt2, this.wordRef);
+            }, 3000);
+        }
+    }
+
     render() {
-        const { counter, quizLength, score, resetQuiz, selectAnswer } = this.props;
+        const { counter, quizLength, resetQuiz, selectAnswer } = this.props;
 
         if (counter === quizLength) {
             selectAnswer();
             return (
                 <React.Fragment>
-                    <div className="d-flex flex-column align-items-center mt-3">
-                        <p className="my-3 h2">YOUR RESULTS</p>
-                        <p className="mb-3 h3">YOU SCORED {score} / {quizLength}</p>
-                        <p className="mb-3">{this.renderResultText()}</p>
+                    <div className="d-flex flex-column align-items-center text-center mt-3">
+                        <p className="mt-3 h1">RESULTS</p>
+                        <p className="mt-4 h3" ref={this.scoreRef}>&nbsp;</p>
+                        <p className="mb-5 h6" ref={this.wordRef}>&nbsp;</p>
                         <button className="btn btn-lg mb-4" onClick={resetQuiz}>
                             NEW QUIZ
                         </button>
