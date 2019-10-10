@@ -5,7 +5,7 @@
     -o-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat;
-    transition: padding 750ms ease-in-out 500ms;
+    transition: padding 750ms ease-in-out 200ms;
 }
 
 .slim-keyboard {
@@ -15,8 +15,6 @@
 
 .quiz {
     transition: max-width 1s;
-    max-width: 100%;
-    height: auto;
 }
 
 .slim-quiz {
