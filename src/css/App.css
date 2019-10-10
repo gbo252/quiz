@@ -12,6 +12,27 @@ body {
     background-image: url("../images/keyboard_bg.jpg");
 }
 
+.btn.btn-lg:disabled {
+    background-color: transparent;
+    font-weight: normal;
+    color: rgba(128, 128, 128, 0.514);
+}
+
+.btn.btn-lg:disabled:hover {
+    background-color: transparent;
+    color: rgba(128, 128, 128, 0.514);
+}
+
+.btn.btn-lg {
+    color: white;
+    border: 1px solid white;
+}
+
+.btn.btn-lg:hover {
+    color: white;
+    background-color: #B5001F;
+}
+
 
 /* Media Queries */
 

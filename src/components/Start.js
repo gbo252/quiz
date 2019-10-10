@@ -11,7 +11,6 @@ import {
 class Start extends React.Component {
 
     first = true;
-
     instructionsRef = React.createRef();
 
     componentDidUpdate(prevProps) {
@@ -26,14 +25,14 @@ class Start extends React.Component {
         const { categories } = this.props;
 
         if (categories.length === 0) {
-            return <option class="text-dark" value="loading" key="loading">LOADING...</option>;
+            return <option className="text-dark" value="loading" key="loading">LOADING...</option>;
         } else {
             if (categories[0].error) {
-                return <option class="text-dark" value="error" key="error">Server Error</option>;
+                return <option className="text-dark" value="error" key="error">Server Error</option>;
             } else {
-                return [<option class="text-dark" value="X" key="X">CATEGORIES...</option>]
+                return [<option className="text-dark" value="X" key="X">CATEGORIES...</option>]
                     .concat(categories.map(category => {
-                        return <option class="text-dark" value={category.id} key={category.id}>
+                        return <option className="text-dark" value={category.id} key={category.id}>
                             {category.name.replace(/Entertainment:\s/, "").replace(/Science:\s/, "").toUpperCase()}
                         </option>;
                     }).sort((a, b) => {
@@ -66,7 +65,7 @@ class Start extends React.Component {
                 <button
                     className={
                         "btn btn-lg"
-                        + ((selectedCategory !== null && selectedCategory !== "X") ? " btn-warning" : " btn-secondary")
+                        + ((selectedCategory !== null && selectedCategory !== "X") ? "" : " btn-secondary")
                     }
                     onClick={onClick}
                     {...atts}>
@@ -75,7 +74,7 @@ class Start extends React.Component {
             );
         } else {
             return (
-                <button className="btn btn-lg btn-warning" type="button" disabled>
+                <button className="btn btn-lg" type="button" disabled>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />
                     LOADING...
                 </button>
@@ -122,18 +121,18 @@ class Start extends React.Component {
         if (counter === -1) {
             return (
                 <div className="row d-flex justify-content-center align-items-around mw-25">
-                    <p ref={this.instructionsRef} className="col-12 h4 text-center pt-3 mb-0">
+                    <p ref={this.instructionsRef} className="col-12 h5 text-center pt-3 mb-0">
                         {this.type()}
                         &nbsp;
                     </p>
                     <select
                         onChange={e => onChange(e)}
-                        className="col-10 my-5 form-control form-control-lg text-white"
+                        className="col-10 mt-3 mb-5 form-control form-control-lg text-white-50"
                         style={{ backgroundColor: "transparent" }}
                     >
                         {this.renderCategories()}
                     </select>
-                    <div className="col-12 d-flex justify-content-center mb-2">
+                    <div className="col-12 d-flex justify-content-center mb-4">
                         {this.renderButton()}
                     </div>
                 </div>

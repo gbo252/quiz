@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { confetti } from "../confetti/confetti";
 
-import Progress from "./Progress";
 import { resetQuiz, selectAnswer } from "../actions";
 
 class Results extends React.Component {
@@ -14,17 +13,17 @@ class Results extends React.Component {
 
         if (percent === 100) {
             confetti.start(4000);
-            return "Top marks, you smashed it!!!";
+            return "TOP MARKS, YOU SMASHED IT!!!";
         } else if (percent >= 75) {
-            return "Nearly full marks, excellent job!";
+            return "NEARLY FULL MARKS, EXCELLENT JOB!";
         } else if (percent >= 50) {
-            return "Good job!";
+            return "GOOD JOB!";
         } else if (percent >= 25) {
-            return "OK score, but you can do better!";
+            return "NOT BAD, BUT YOU CAN DO BETTER!";
         } else if (percent > 0) {
-            return "Try again!";
+            return "TRY AGAIN!";
         } else {
-            return "Better luck next time!";
+            return "BETTER LUCK NEXT TIME!";
         }
     }
 
@@ -35,14 +34,13 @@ class Results extends React.Component {
             selectAnswer();
             return (
                 <React.Fragment>
-                    <Progress progress={100} counter={counter} quizLength={quizLength} />
                     <div className="d-flex flex-column align-items-center mt-3">
-                        <p className="mb-3 h3">Your Results</p>
-                        <p className="mb-3 h4">You scored {score} / {quizLength}</p>
+                        <p className="my-3 h2">YOUR RESULTS</p>
+                        <p className="mb-3 h3">YOU SCORED {score} / {quizLength}</p>
                         <p className="mb-3">{this.renderResultText()}</p>
-                        <button className="btn btn-lg btn-warning" onClick={resetQuiz}>
-                            New Quiz
-                    </button>
+                        <button className="btn btn-lg mb-4" onClick={resetQuiz}>
+                            NEW QUIZ
+                        </button>
                     </div>
                 </React.Fragment>
             );

@@ -5,10 +5,10 @@ import "../css/Progress.css";
 
 const Progress = ({ progress, counter, quizLength }) => {
     return (
-        <div>
+        <div className="mx-3">
             <CSSTransition
                 in={counter >= 0 && counter < quizLength}
-                timeout={1250}
+                timeout={1000}
                 classNames="grow"
                 appear={true}
             >

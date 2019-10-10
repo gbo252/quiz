@@ -6,8 +6,9 @@
     background-size: cover;
     background-repeat: no-repeat;
     padding: 4rem 2rem;
-    transition: padding 750ms ease-in-out 200ms;
     border-bottom: 2px solid white;
+    background-position-x: center;
+    transition: padding 750ms ease-in-out 200ms;
 }
 
 .slim-keyboard {

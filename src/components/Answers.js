@@ -23,7 +23,10 @@ class Answers extends React.Component {
                 if (selectedAnswer.answer === a) {
                     return " bg-danger text-white";
                 }
+                return "";
             }
+        } else {
+            return "";
         }
     }
 
@@ -44,7 +47,7 @@ class Answers extends React.Component {
                         disabled={answersLocked}
                     />
                     <label
-                        className={"list-group-item list-group-item-action pr-5" + this.renderClassName(a)}
+                        className={"list-group-item list-group-item-action" + this.renderClassName(a)}
                         htmlFor={`inlineRadio${i}`}
                     >
                         {decodeHtml(a)}

@@ -16,7 +16,7 @@ import "../css/Question.css";
 
 class Question extends React.Component {
 
-    renderResult() {
+    componentDidUpdate() {
         const {
             selectedAnswer,
             trivia,
@@ -61,7 +61,7 @@ class Question extends React.Component {
 
         if (loading) {
             return (
-                <button className="btn btn-lg btn-warning" type="button" disabled>
+                <button className="btn btn-lg" type="button" disabled>
                     <span
                         className="spinner-border spinner-border-sm"
                         role="status"
@@ -73,7 +73,7 @@ class Question extends React.Component {
         } else if (answersLocked) {
             return (
                 <button
-                    className="btn btn-lg btn-warning"
+                    className="btn btn-lg"
                     onClick={onClickNext}
                 >
                     {counter < (quizLength - 1) ? "NEXT QUESTION" : "GO TO RESULTS"}
@@ -81,7 +81,7 @@ class Question extends React.Component {
             );
         } else {
             return (
-                <button className="btn btn-lg btn-secondary" onClick={toggleLock} {...atts}>
+                <button className="btn btn-lg" onClick={toggleLock} {...atts}>
                     SUBMIT
                 </button>
             );
@@ -104,14 +104,13 @@ class Question extends React.Component {
                     >
                         <div className="d-flex flex-column align-items-center">
                             <p className="h4 my-3">QUESTION {counter + 1} of {quizLength}</p>
-                            <div>{decodeHtml(trivia[counter].question)}</div>
+                            <div className="mx-3">{decodeHtml(trivia[counter].question)}</div>
                             <div className="list-group my-4">
                                 <Answers />
                             </div>
                             <div className="mb-4">
                                 {this.renderButton()}
                             </div>
-                            {this.renderResult()}
                         </div>
                     </CSSTransition>
                 </React.Fragment>
