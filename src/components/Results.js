@@ -53,6 +53,10 @@ class Results extends React.Component {
                     x++;
                     setTimeout(() => typeWriter2(x, text, ref), speed);
                 }
+            } else if (this.wordRef.current.innerHTML === "&nbsp;") {
+                setTimeout(() => {
+                    typeWriter2(k, wordText, this.wordRef);
+                }, 500);
             }
         }
 
@@ -60,10 +64,6 @@ class Results extends React.Component {
             setTimeout(() => {
                 typeWriter2(j, scoreText, this.scoreRef);
             }, 750);
-            setTimeout(() => {
-                j = 0;
-                typeWriter2(k, wordText, this.wordRef);
-            }, 3000);
         }
     }
 
