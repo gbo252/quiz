@@ -17,7 +17,7 @@ import {
 } from "../actions/types";
 
 const quizLength = () => {
-    return 5;
+    return 1;
 };
 
 const sessionToken = (state = null, action) => {

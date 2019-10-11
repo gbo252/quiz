@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { CSSTransition } from 'react-transition-group';
 
 import {
     fetchQuestions,
@@ -120,22 +121,29 @@ class Start extends React.Component {
 
         if (counter === -1) {
             return (
-                <div className="row d-flex justify-content-center align-items-around mw-25">
-                    <p ref={this.instructionsRef} className="col-12 h5 text-center pt-3 mb-0">
-                        {this.type()}
-                        &nbsp;
+                <CSSTransition
+                    in={counter === -1}
+                    timeout={1000}
+                    classNames="fade"
+                    appear={true}
+                >
+                    <div className="row d-flex justify-content-center align-items-around mw-25">
+                        <p ref={this.instructionsRef} className="col-12 h5 text-center pt-3 mb-0">
+                            {this.type()}
+                            &nbsp;
                     </p>
-                    <select
-                        onChange={e => onChange(e)}
-                        className="col-10 mt-3 mb-5 form-control form-control-lg text-white-50"
-                        style={{ backgroundColor: "transparent" }}
-                    >
-                        {this.renderCategories()}
-                    </select>
-                    <div className="col-12 d-flex justify-content-center mb-4">
-                        {this.renderButton()}
+                        <select
+                            onChange={e => onChange(e)}
+                            className="col-10 mt-3 mb-5 form-control form-control-lg text-white-50"
+                            style={{ backgroundColor: "transparent" }}
+                        >
+                            {this.renderCategories()}
+                        </select>
+                        <div className="col-12 d-flex justify-content-center mb-4">
+                            {this.renderButton()}
+                        </div>
                     </div>
-                </div>
+                </CSSTransition>
             );
         }
 

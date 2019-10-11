@@ -1,3 +1,12 @@
+.fade-appear {
+    opacity: 0;
+}
+
+.fade-appear-active {
+    opacity: 1;
+    transition: opacity 1000ms;
+}
+
 .fade-enter {
     opacity: 0;
 }
@@ -13,5 +22,5 @@
 
 .fade-exit-active {
     opacity: 0;
-    transition: opacity 1000ms;
+    transition: opacity 500ms;
 }

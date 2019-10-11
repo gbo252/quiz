@@ -12,7 +12,7 @@ import {
 import { decodeHtml } from "./helper";
 import Answers from "./Answers";
 import Progress from "./Progress";
-import "../css/Question.css";
+import "../css/fade.css";
 
 class Question extends React.Component {
 

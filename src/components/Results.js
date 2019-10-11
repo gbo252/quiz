@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { CSSTransition } from 'react-transition-group';
 import { confetti } from "../confetti/confetti";
 
-import { resetQuiz, selectAnswer } from "../actions";
+import "../css/fade.css";
+import { resetQuiz, selectAnswer, toggleAnimate } from "../actions";
 
 class Results extends React.Component {
 
@@ -13,6 +15,7 @@ class Results extends React.Component {
         if (prevProps.counter !== this.props.counter) {
             if (this.props.counter === this.props.quizLength) {
                 this.type2();
+                this.props.toggleAnimate();
             }
         }
     }
@@ -64,21 +67,35 @@ class Results extends React.Component {
     }
 
     render() {
-        const { counter, quizLength, resetQuiz, selectAnswer } = this.props;
+        const {
+            counter,
+            quizLength,
+            resetQuiz,
+            selectAnswer,
+            animate,
+            toggleAnimate
+        } = this.props;
 
         if (counter === quizLength) {
             selectAnswer();
             return (
-                <React.Fragment>
+                <CSSTransition
+                    in={animate}
+                    timeout={1000}
+                    classNames="fade"
+                >
                     <div className="d-flex flex-column align-items-center text-center mt-3">
                         <p className="mt-3 h1">RESULTS</p>
                         <p className="mt-4 h3" ref={this.scoreRef}>&nbsp;</p>
                         <p className="mb-5 h6" ref={this.wordRef}>&nbsp;</p>
-                        <button className="btn btn-lg mb-4" onClick={resetQuiz}>
+                        <button
+                            className="btn btn-lg mb-4"
+                            onClick={() => { toggleAnimate(); setTimeout(() => { resetQuiz(); }, 500); }}
+                        >
                             NEW QUIZ
                         </button>
                     </div>
-                </React.Fragment>
+                </CSSTransition>
             );
         }
         return null;
@@ -89,8 +106,9 @@ const mapStateToProps = state => {
     return {
         counter: state.counter,
         quizLength: state.quizLength,
-        score: state.score
+        score: state.score,
+        animate: state.animate
     };
 };
 
-export default connect(mapStateToProps, { resetQuiz, selectAnswer })(Results);
+export default connect(mapStateToProps, { resetQuiz, selectAnswer, toggleAnimate })(Results);
