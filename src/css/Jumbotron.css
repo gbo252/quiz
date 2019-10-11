@@ -1,5 +1,5 @@
 .keyboard {
-    background-image: url("../images/keyboard.jpg");
+    background-image: url("../images/keyboard_jumbo_lg.jpg");
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -16,4 +16,18 @@
 
 .slim-quiz {
     max-width: 200px;
+}
+
+/* Media Queries */
+
+@media only screen and (max-width: 1300px) {
+    .keyboard {
+        background-image: url("../images/keyboard_jumbo_md.jpg");
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .keyboard {
+        background-image: url("../images/keyboard_jumbo_sm.jpg");
+    }
 }

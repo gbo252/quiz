@@ -9,7 +9,7 @@ body {
     font-family: 'Roboto Mono', monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: url("../images/keyboard_bg.jpg");
+    background-image: url("../images/keyboard_bg_lg.jpg");
 }
 
 .btn.btn-lg:disabled {
@@ -33,8 +33,13 @@ body {
     background-color: #B5001F;
 }
 
-
 /* Media Queries */
+
+@media only screen and (max-width: 1300px) {
+    body {
+        background-image: url("../images/keyboard_bg_sm.jpg");
+    }
+}
 
 @media only screen and (max-width: 560px) {
     html {
