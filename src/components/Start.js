@@ -131,7 +131,7 @@ class Start extends React.Component {
                         <p ref={this.instructionsRef} className="col-12 h5 text-center pt-3 mb-0">
                             {this.type()}
                             &nbsp;
-                    </p>
+                        </p>
                         <select
                             onChange={e => onChange(e)}
                             className="col-10 mt-3 mb-5 form-control form-control-lg text-white-50"

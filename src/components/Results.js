@@ -16,9 +16,6 @@ class Results extends React.Component {
             if (this.props.counter === this.props.quizLength) {
                 this.type2();
                 this.props.toggleAnimate();
-
-                this.txt = `YOU SCORED ${this.props.score}/${this.props.quizLength}`;
-                this.txt2 = this.renderResultText();
             }
         }
     }
@@ -44,25 +41,28 @@ class Results extends React.Component {
 
     type2() {
         let j = 0;
+        let k = 0;
+        let scoreText = `YOU SCORED ${this.props.score}/${this.props.quizLength}`;
+        let wordText = this.renderResultText();
         let speed = 100;
 
-        const typeWriter2 = (text, ref) => {
-            if (j < text.length) {
+        const typeWriter2 = (x, text, ref) => {
+            if (x < text.length) {
                 if (ref.current) {
-                    ref.current.innerHTML += text.charAt(j);
-                    j++;
-                    setTimeout(() => typeWriter2(text, ref), speed);
+                    ref.current.innerHTML += text.charAt(x);
+                    x++;
+                    setTimeout(() => typeWriter2(x, text, ref), speed);
                 }
             }
         }
 
         if (this.scoreRef.current) {
             setTimeout(() => {
-                typeWriter2(this.txt, this.scoreRef);
+                typeWriter2(j, scoreText, this.scoreRef);
             }, 750);
             setTimeout(() => {
                 j = 0;
-                typeWriter2(this.txt2, this.wordRef);
+                typeWriter2(k, wordText, this.wordRef);
             }, 3000);
         }
     }
