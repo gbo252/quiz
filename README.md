@@ -1,68 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Quiz logo](./public/logo192.png)
 
-## Available Scripts
+# Quiz
+> A simple, short, fun, multiple-choice quiz!
 
-In the project directory, you can run:
+## Table of contents
+* [Description](#description)
+* [Features](#features)
+* [How To Use](#how-to-use)
+* [Screenshots](#screenshots)
+* [Built With](#built-with)
+* [Contact](#contact)
 
-### `npm start`
+## Description
+**Quiz** is a simple web quiz where you choose a category and then answer 5 multiple-choice questions, revealing your score at the end.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It queries an API database ([Open Trivia DB](https://opentdb.com/)) of trivia questions in your chosen category to retrieve the questions and answers.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Features
+* choose a category for each round
+* answers display green if correct and red if incorrect
+* result is displayed at the end of the 5 questions
 
-### `npm test`
+## How To Use
+1. Choose a category from the dropdown list and click "BEGIN QUIZ"
+2. Choose an answer and click "SUBMIT"
+3. Click "NEXT QUESTION" 
+4. Repeat steps 2-3 until you reach question 5
+5. Click "GO TO RESULTS"
+6. Click "NEW QUIZ" and start again from step 1
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots
+![Home page](./src/images/SS_Home.jpg)
+![Question page](./src/images/SS_Question.jpg)
 
-### `npm run build`
+## Built With
+* HTML
+* CSS
+* JavaScript
+* Bootstrap - 4.3.1
+* React - 16.10.1
+* Redux - 4.0.4
+* Node - 10.16.0
+* npm - 6.9.0
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Contact
+Created by Guy Owen - guy.owen@virginmedia.com
